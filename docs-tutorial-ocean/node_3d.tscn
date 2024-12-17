@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://bbepvbcxo0u30"]
+
+[ext_resource type="Shader" path="res://docs-tutorial-ocean/ocean.gdshader" id="1_mcyqa"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2x1rd"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_85ly6"]
+seamless = true
+noise = SubResource("FastNoiseLite_2x1rd")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pfv7e"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3cp68"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_pfv7e")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kqb7i"]
+render_priority = 0
+shader = ExtResource("1_mcyqa")
+shader_parameter/height_scalar = 0.2
+shader_parameter/surface_noise = SubResource("NoiseTexture2D_85ly6")
+shader_parameter/surface_noise_normal = SubResource("NoiseTexture2D_3cp68")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_t251c"]
+material = SubResource("ShaderMaterial_kqb7i")
+subdivide_width = 62
+subdivide_depth = 62
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.031625, 0, 0.0210833)
+mesh = SubResource("PlaneMesh_t251c")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.242642, -1.15372)
+visible = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.964728, 0.26325, 0, -0.26325, -0.964728, 0, 0.367205, 0)

@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://cgbcpui7h1mof"]
+
+[ext_resource type="Script" path="res://iridescence/iridescence.gd" id="1_7pfou"]
+[ext_resource type="Shader" path="res://iridescence/iridescence.gdshader" id="2_pa8go"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qtev8"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n8o1j"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_qtev8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wj8hv"]
+render_priority = 0
+shader = ExtResource("2_pa8go")
+shader_parameter/base_colour = Color(0.931452, 0.360633, 0.370208, 1)
+shader_parameter/iridescent = 60.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_n8o1j")
+
+[sub_resource type="SphereMesh" id="SphereMesh_0fylg"]
+material = SubResource("ShaderMaterial_wj8hv")
+
+[node name="Iridescence" type="Node3D"]
+script = ExtResource("1_7pfou")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.931592, 0, -0.369283, 0, 1, 0, 0.369283, 0, 0.931592, 0, 0, 0)
+mesh = SubResource("SphereMesh_0fylg")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.960167, 0.279427, 0, -0.279427, -0.960167, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, -0.410619, 0.575667, 0, 0.814116, 0.580703, -0.707107, -0.410619, 0.575667, 1.5, 1.48, 1.5)
+fov = 24.2
