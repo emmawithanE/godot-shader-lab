@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://inwb8qjmlv4j"]
+
+[ext_resource type="Shader" path="res://balatro/holo.gdshader" id="1_bn4rs"]
+[ext_resource type="Texture2D" uid="uid://br0tq5iqpd76n" path="res://balatro/8BitDeck_opt2.png" id="2_1x4ss"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3mvv3"]
+render_priority = 0
+shader = ExtResource("1_bn4rs")
+shader_parameter/card = 2
+shader_parameter/suit = 1
+shader_parameter/ext_dimensions = Vector2(1.42, 1.9)
+shader_parameter/card_texture = ExtResource("2_1x4ss")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gveah"]
+material = SubResource("ShaderMaterial_3mvv3")
+size = Vector2(1.42, 1.9)
+orientation = 2
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Sprite3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_gveah")
