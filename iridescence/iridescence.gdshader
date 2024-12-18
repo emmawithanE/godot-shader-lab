@@ -33,7 +33,7 @@ void fragment() {
 	ALBEDO = base_colour;
 	
 	vec3 col_hsv = rgb_to_hsv(base_colour);
-	float edgeness = pow(NORMAL.x, 1.0);
+	float edgeness = NORMAL.x;
 	float dot_prod = (pow((1.0 - dot(NORMAL, VIEW)) * 0.5 + 0.5, 5.0) * edgeness);
 	//dot_prod = dot(NORMAL, VIEW);
 	//dot_prod = edgeness;
