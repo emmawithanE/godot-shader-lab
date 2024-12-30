@@ -26,7 +26,7 @@ void fragment() {
 	RIM = 0.2;
 	ALBEDO = vec3(0.01,0.03,0.05) + 0.1 * fresnel;
 	NORMAL_MAP = texture(surface_noise_normal, tex_position).rgb;
-	NORMAL_MAP.xy += wave_normal * height_scalar * 0.5;
+	NORMAL_MAP.xy += wave_normal * height_scalar;
 	NORMAL_MAP = normalize(NORMAL_MAP);
 	//ALBEDO = NORMAL_MAP;
 }

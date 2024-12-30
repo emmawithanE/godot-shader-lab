@@ -37,4 +37,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.242642, -1.15372)
 visible = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.916488, 0.400061, 0, -0.400061, -0.916488, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -0.916488, 0.400061, 0, -0.400061, -0.916488, 0, 0.367205, 0)
