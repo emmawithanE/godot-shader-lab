@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://bpi8usqcmw7sk"]
+[gd_scene load_steps=18 format=3 uid="uid://bpi8usqcmw7sk"]
 
 [ext_resource type="Script" path="res://ptcg-cards/card.gd" id="1_2mhju"]
 [ext_resource type="Shader" path="res://ptcg-cards/card.gdshader" id="1_6jg7x"]
+[ext_resource type="Texture2D" uid="uid://kiw48wtl74pl" path="res://ptcg-cards/top_overlay_only.png" id="2_3piwb"]
+[ext_resource type="Texture2D" uid="uid://caca87dalxwyq" path="res://ptcg-cards/elle_photo.png" id="2_at1nd"]
 [ext_resource type="Texture2D" uid="uid://dlisvaywq8tmv" path="res://ptcg-cards/cyrus.png" id="3_vjbcc"]
-[ext_resource type="Texture2D" uid="uid://cld1at8byticd" path="res://ptcg-cards/overlays.png" id="4_8xwcn"]
+[ext_resource type="Texture2D" uid="uid://cquykrvx6mk32" path="res://ptcg-cards/bottom_overlay_only.png" id="6_kbnqn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8pavp"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,20 +20,28 @@ sky = SubResource("Sky_48o85")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="Gradient" id="Gradient_rlntv"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.42437, 0.920168)
+colors = PackedColorArray(0.196991, 0.0925186, 0.00792142, 1, 0.212915, 0.317293, 0.15555, 1, 0.2635, 0.68, 0.17, 1)
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_dw5nl"]
-frequency = 0.0389
+frequency = 0.0169
+fractal_gain = 0.34
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b4b72"]
-seamless = true
+height = 347
+color_ramp = SubResource("Gradient_rlntv")
 noise = SubResource("FastNoiseLite_dw5nl")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tfqlv"]
 render_priority = 0
 shader = ExtResource("1_6jg7x")
-shader_parameter/offset = PackedVector2Array(0, 0)
-shader_parameter/scale = PackedVector2Array(1, 1)
-shader_parameter/depth = PackedFloat32Array(0.5)
-shader_parameter/layers = Array[Texture2D]([SubResource("NoiseTexture2D_b4b72")])
+shader_parameter/offset = PackedVector2Array(-0.2, -0.175, 0.125, 0.175, 0.135, 0.195)
+shader_parameter/scale = PackedVector2Array(1, 1, 4, 2.75, 3.83, 2.235)
+shader_parameter/depth = PackedFloat32Array(0.5, 0, -0.7)
+shader_parameter/layers = Array[Texture2D]([SubResource("NoiseTexture2D_b4b72"), ExtResource("2_3piwb"), ExtResource("2_at1nd")])
 
 [sub_resource type="QuadMesh" id="QuadMesh_whakh"]
 material = SubResource("ShaderMaterial_tfqlv")
@@ -41,30 +51,41 @@ size = Vector2(0.25, 0.35)
 viewport_path = NodePath("Control/SubViewport")
 
 [sub_resource type="LabelSettings" id="LabelSettings_a2i03"]
-font_size = 10
+line_spacing = 0.0
+font_size = 24
 font_color = Color(0, 0, 0, 1)
-outline_size = 2
+outline_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_qr0y7"]
+line_spacing = 0.0
+font_size = 28
+font_color = Color(0, 0, 0, 1)
+outline_size = 8
 
 [node name="Cards" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.984808, -0.0301537, 0.17101, 0, 0.984808, 0.173648, -0.173648, -0.17101, 0.969846, 0, 0, 0)
+light_energy = 1.3
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pbnes")
 
 [node name="Card" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.945125, 0.0434903, -0.323801, 0, 0.9911, 0.133116, 0.326708, -0.125812, 0.936714, 0, 0, 0)
+transform = Transform3D(0.987354, 0.0737047, -0.140352, 0, 0.885346, 0.464931, 0.158528, -0.459052, 0.874151, 0, 0, 0)
 mesh = SubResource("QuadMesh_whakh")
 script = ExtResource("1_2mhju")
+active = true
 
 [node name="Sprite3D" type="Sprite3D" parent="Card"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.001)
-pixel_size = 0.001
+pixel_size = 0.0005
 texture = SubResource("ViewportTexture_2kqbg")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+fov = 47.8
 
 [node name="Control" type="Control" parent="."]
 unique_name_in_owner = true
@@ -73,13 +94,19 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="CardOverlay" type="Control" parent="Control"]
+[node name="SubViewport" type="SubViewport" parent="Control"]
+transparent_bg = true
+screen_space_aa = 1
+canvas_item_default_texture_filter = 2
+size = Vector2i(500, 700)
+
+[node name="CardOverlay" type="Control" parent="Control/SubViewport"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 250.0
-offset_bottom = 350.0
+offset_right = 500.0
+offset_bottom = 700.0
 
-[node name="template" type="TextureRect" parent="Control/CardOverlay"]
+[node name="template" type="TextureRect" parent="Control/SubViewport/CardOverlay"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -91,26 +118,45 @@ texture = ExtResource("3_vjbcc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="overlay" type="TextureRect" parent="Control/CardOverlay"]
+[node name="overlay" type="TextureRect" parent="Control/SubViewport/CardOverlay"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_8xwcn")
+texture = ExtResource("6_kbnqn")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Control/CardOverlay"]
-layout_mode = 0
-offset_left = 29.0
-offset_top = 223.0
-offset_right = 73.0
-offset_bottom = 246.0
-text = "Switch in"
-label_settings = SubResource("LabelSettings_a2i03")
+[node name="topoverlay" type="TextureRect" parent="Control/SubViewport/CardOverlay"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_3piwb")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="SubViewport" type="SubViewport" parent="Control"]
-transparent_bg = true
-size = Vector2i(250, 350)
+[node name="Label" type="Label" parent="Control/SubViewport/CardOverlay"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 446.0
+offset_right = 453.0
+offset_bottom = 530.0
+text = "Take a photo of one of your opponent's Benched Pokemon."
+label_settings = SubResource("LabelSettings_a2i03")
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="Control/SubViewport/CardOverlay"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 54.0
+offset_right = 426.0
+offset_bottom = 138.0
+text = "Elle Valentine"
+label_settings = SubResource("LabelSettings_qr0y7")
+autowrap_mode = 3

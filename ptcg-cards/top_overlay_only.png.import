@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://caca87dalxwyq"
-path.s3tc="res://.godot/imported/elle_photo.png-41556844007f94f5f8164dc32afd8236.s3tc.ctex"
+uid="uid://kiw48wtl74pl"
+path.s3tc="res://.godot/imported/top_overlay_only.png-99bbe7091652a7b8f9896361cebd5342.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://ptcg-cards/elle_photo.png"
-dest_files=["res://.godot/imported/elle_photo.png-41556844007f94f5f8164dc32afd8236.s3tc.ctex"]
+source_file="res://ptcg-cards/top_overlay_only.png"
+dest_files=["res://.godot/imported/top_overlay_only.png-99bbe7091652a7b8f9896361cebd5342.s3tc.ctex"]
 
 [params]
 

@@ -1,7 +1,12 @@
 @tool
 extends MeshInstance3D
 
+@export var active := false
+
 func _process(delta: float) -> void:
+	if !active:
+		rotation_degrees = Vector3(0,0,0)
+		return
 	var mouse_pos : Vector2 = %Control.get_global_mouse_position()
 	#DisplayServer.mouse_get_position()
 	
